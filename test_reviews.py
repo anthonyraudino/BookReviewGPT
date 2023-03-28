@@ -21,12 +21,12 @@ def test_generate_book_summary():
     # Test generating a book summary
     book_title = "The Great Gatsby"
     book_author = "F. Scott Fitzgerald"
-    book_summary = book_reviews.generate_book_summary(book_title, book_author)
+    book_summary = reviews.generate_book_summary(book_title, book_author)
     assert isinstance(book_summary, str)
 
 
 def test_process_book_list(sample_input_file):
     # Test processing a sample book list
     output_file_path = os.path.join(os.path.dirname(sample_input_file), "output.csv")
-    book_reviews.process_book_list(sample_input_file, output_file_path)
+    reviews.process_book_list(sample_input_file, output_file_path)
     assert os.path.isfile(output_file_path)
