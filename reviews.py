@@ -13,36 +13,43 @@ output_file_path = "book_reviews.csv"
 # Define the OpenAI engine ID to use for generating summaries
 engine_id = "text-davinci-003"
 
-# Define a function to generate a book summary given a book title and author
+# Define a function to generate a book summary, pivotal moment, and key quote given a book title and author
 def generate_book_review(book_title, book_author):
     # Replace the prompt variables with the provided book title and author
     prompt_with_book = prompt.format(book_title=book_title, book_author=book_author)
 
     print(f"Generating review for {book_title} by {book_author}...")
 
-    # Generate the book summary using the OpenAI API
+    # Generate the book review using the OpenAI API
     response = openai.Completion.create(
         engine=engine_id,
         prompt=prompt_with_book,
         max_tokens=1500,
         n=1,
         stop=None,
-        temperature=0.75,
+        temperature=0.9,
         top_p=1,
         frequency_penalty=0,
         presence_penalty=0
     )
 
     # Extract the generated book summary, pivotal moment, and key quote from the OpenAI API response
-    generated_text = response.choices[0].text.strip()
-    sections = generated_text.split("Pivotal Moment:")
-    book_summary = sections[0].strip()
-    pivotal_moment = sections[1].split("Key Quote:")[0].strip()
-    key_quote = sections[1].split("Key Quote:")[1].strip()
+    generated_text = response.choices[0].text.strip().split("\n")
+    book_summary = ""
+    pivotal_moment = ""
+    key_quote = ""
+
+    for line in generated_text:
+        if line.startswith("Book Summary:"):
+            book_summary = line.replace("Book Summary:", "").strip()
+        elif line.startswith("Pivotal Moment:"):
+            pivotal_moment = line.replace("Pivotal Moment:", "").strip()
+        elif line.startswith("Key Quote:"):
+            key_quote = line.replace("Key Quote:", "").strip()
 
     print(f"Review generated for {book_title} by {book_author}.")
 
-    # Return the generated book summary, pivotal moment, and key quote
+    # Return the generated book review
     return book_summary, pivotal_moment, key_quote
 
 # Open the CSV input file and create a CSV output file
@@ -52,7 +59,7 @@ with open(input_file_path, mode="r", newline="") as input_file, open(output_file
     writer = csv.writer(output_file)
 
     # Write the header row to the output CSV file
-    writer.writerow(["Title", "Author", "Book Summary", "Pivotal Moment", "Key Quote"])
+    writer.writerow(["Title", "Author", "Summary", "Pivotal Moment", "Key Quote"])
 
     # Iterate over each row in the input CSV file
     for row in reader:
