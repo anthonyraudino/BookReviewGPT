@@ -1,7 +1,11 @@
+import configparser
 import csv
 import openai
 
-openai.api_key = "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"  # Replace with your API key
+# Read the OpenAI API key from the apikey.cfg file
+config = configparser.ConfigParser()
+config.read("apikey.cfg")
+openai.api_key = config.get("openai", "api_key")
 
 # Define the OpenAI prompt template
 prompt = "Write a book overview with the following written sections, using the specific list format: Book Summary: A summary of {book_title} by {book_author} in 1000 words or less including summaries of key characters, locations, plot lines and a final conclusion on the book. Pivotal Moment: List what is the most pivotal chapter of the book and why you think it is the most pivotal chapter. Key Quote: Quote a line from the book that would be the most poignant quote."

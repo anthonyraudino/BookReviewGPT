@@ -152,3 +152,5 @@ cython_debug/
 #.idea/
 *.csv
 *.csv
+book_reviews.csv
+apikey.cfg
