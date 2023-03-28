@@ -2,7 +2,7 @@ import csv
 import pytest
 import os
 
-import book_reviews
+import reviews
 
 
 @pytest.fixture(scope="module")
