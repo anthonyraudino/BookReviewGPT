@@ -57,7 +57,8 @@ def generate_book_review(book_title, book_author):
     return book_summary, pivotal_moment, key_quote
 
 # Open the CSV input file and create a CSV output file
-with open(input_file_path, mode="r", newline="") as input_file, open(output_file_path, mode="w", newline="") as output_file:
+#with open(input_file_path, mode="r", newline="") as input_file, open(output_file_path, mode="w", newline="") as output_file:
+with open(input_file_path, mode="r", newline="", encoding="utf-8") as input_file, open(output_file_path, mode="w", newline="", encoding="utf-8") as output_file:
     # Create CSV reader and writer objects
     reader = csv.reader(input_file)
     writer = csv.writer(output_file)
