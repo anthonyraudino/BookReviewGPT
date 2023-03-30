@@ -31,7 +31,7 @@ def generate_book_review(book_title, book_author):
         max_tokens=1500,
         n=1,
         stop=None,
-        temperature=0.9,
+        temperature=0.75,
         top_p=1,
         frequency_penalty=0,
         presence_penalty=0
